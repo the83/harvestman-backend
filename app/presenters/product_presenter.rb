@@ -8,7 +8,8 @@ class ProductPresenter
       id: @product.id,
       name: @product.name,
       model_number: @product.model_number,
-      description: @product.description
+      description: @product.description,
+      manual: @product.manual
     }
   end
 

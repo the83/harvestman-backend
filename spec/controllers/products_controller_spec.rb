@@ -7,7 +7,8 @@ describe Api::V1::ProductsController do
       product = Product.create!({
         name: "foo",
         model_number: "bar",
-        description: "baz"
+        description: "baz",
+        manual: "buz"
       })
 
       get :show, { id: product.id }
@@ -17,7 +18,8 @@ describe Api::V1::ProductsController do
           id: product.id,
           name: product.name,
           model_number: product.model_number,
-          description: product.description
+          description: product.description,
+          manual: product.manual
         }
       }
 
@@ -31,13 +33,15 @@ describe Api::V1::ProductsController do
       first = Product.create!({
         name: "Piston Honda",
         model_number: "1991mk2",
-        description: "wavetable oscillator"
+        description: "wavetable oscillator",
+        manual: "piston honda manual"
       })
 
       second = Product.create!({
         name: "Hertz Donut",
         model_number: "9792mk2",
-        description: "complex oscillator"
+        description: "complex oscillator",
+        manual: "Hertz Manual"
       })
 
       get :index
@@ -48,14 +52,16 @@ describe Api::V1::ProductsController do
             id: first.id,
             name: first.name,
             model_number: first.model_number,
-            description: first.description
+            description: first.description,
+            manual: first.manual
           },
           {
             id: second.id,
             name: second.name,
             model_number: second.model_number,
-            description: second.description
-          },
+            description: second.description,
+            manual: second.manual
+          }
         ]
       }
       parsed_response = JSON.parse(response.body, { symbolize_names: true })
@@ -68,13 +74,15 @@ describe Api::V1::ProductsController do
       product = Product.create!({
         name: "Piston Honda",
         model_number: "1991mk2",
-        description: "wavetable oscillator"
+        description: "wavetable oscillator",
+        manual: "piston manual"
       })
 
       update_attributes = {
         id: product.id,
         name: "New Name",
-        description: "New Description"
+        description: "New Description",
+        manual: "New Manual"
       }
 
       put :update, { id: product.id, product: update_attributes }
@@ -88,7 +96,8 @@ describe Api::V1::ProductsController do
           id: product.id,
           name: update_attributes[:name],
           model_number: product.model_number,
-          description: update_attributes[:description]
+          description: update_attributes[:description],
+          manual: update_attributes[:manual]
         },
       }
       parsed_response = JSON.parse(response.body, { symbolize_names: true })
@@ -101,7 +110,8 @@ describe Api::V1::ProductsController do
       create_attributes = {
         name: "Piston Honda",
         model_number: "1991mk2",
-        description: "wavetable oscillator"
+        description: "wavetable oscillator",
+        manual: "Piston Manual"
       }
 
       post :create, { product: create_attributes }
@@ -116,7 +126,8 @@ describe Api::V1::ProductsController do
           id: product.id,
           name: product.name,
           model_number: product.model_number,
-          description: product.description
+          description: product.description,
+          manual: product.manual
         },
       }
 

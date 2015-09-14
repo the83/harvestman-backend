@@ -7,14 +7,16 @@ describe ProductPresenter do
     product = Product.create!({
       name: "foo",
       model_number: "bar",
-      description: "baz"
+      description: "baz",
+      manual: "buz"
     })
 
     presented = ({
       id: product.id,
       name: product.name,
       model_number: product.model_number,
-      description: product.description
+      description: product.description,
+      manual: product.manual
     }).to_json
 
     expect(ProductPresenter.new(product).to_json).to eq(presented)
