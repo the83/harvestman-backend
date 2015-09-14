@@ -1,13 +1,12 @@
 require "product_presenter"
 
 class Api::V1::ProductsController < ApplicationController
-  CREATE_PARAMS_WHITELIST = [
-    :model_number
-  ]
+  CREATE_PARAMS_WHITELIST = []
 
   UPDATE_PARAMS_WHITELIST = [
     :name,
-    :description
+    :description,
+    :model_number
   ].freeze
 
   def show
