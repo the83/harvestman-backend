@@ -1,0 +1,11 @@
+Install Postgres database
+
+Install and run the Postgres app. Click on the elephant in the menu bar, select "Open psql", then run the following commands:
+```
+$ create role harvestman with superuser login password 'password';
+```
+
+If you have trouble installing the postgres gem, you might want to try this:
+```
+$ gem install pg -v '0.15.1' -- --with-pg-config=/Applications/Postgres.app/Contents/Versions/9.4/bin/pg_config
+```
