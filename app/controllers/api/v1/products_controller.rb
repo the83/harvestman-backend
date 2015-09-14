@@ -1,6 +1,6 @@
 require "product_presenter"
 
-class ProductsController < ApplicationController
+class Api::V1::ProductsController < ApplicationController
   CREATE_PARAMS_WHITELIST = [
     :model_number
   ]

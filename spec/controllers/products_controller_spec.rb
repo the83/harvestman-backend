@@ -1,7 +1,7 @@
 require "rails_helper"
 require "spec_helper"
 
-describe ProductsController do
+describe Api::V1::ProductsController do
   describe "#show" do
     it "returns a product" do
       product = Product.create!({
