@@ -6,6 +6,7 @@ class Api::V1::ProductsController < ApplicationController
   UPDATE_PARAMS_WHITELIST = [
     :name,
     :description,
+    :brief_description,
     :model_number,
     :manual
   ].freeze

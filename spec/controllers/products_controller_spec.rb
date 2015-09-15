@@ -8,6 +8,7 @@ describe Api::V1::ProductsController do
         name: "foo",
         model_number: "bar",
         description: "baz",
+        brief_description: "brief",
         manual: "buz"
       })
 
@@ -19,6 +20,7 @@ describe Api::V1::ProductsController do
           name: product.name,
           model_number: product.model_number,
           description: product.description,
+          brief_description: product.brief_description,
           manual: product.manual
         }
       }
@@ -34,6 +36,7 @@ describe Api::V1::ProductsController do
         name: "Piston Honda",
         model_number: "1991mk2",
         description: "wavetable oscillator",
+        brief_description: "brief",
         manual: "piston honda manual"
       })
 
@@ -41,6 +44,7 @@ describe Api::V1::ProductsController do
         name: "Hertz Donut",
         model_number: "9792mk2",
         description: "complex oscillator",
+        brief_description: "brief",
         manual: "Hertz Manual"
       })
 
@@ -53,6 +57,7 @@ describe Api::V1::ProductsController do
             name: first.name,
             model_number: first.model_number,
             description: first.description,
+            brief_description: first.brief_description,
             manual: first.manual
           },
           {
@@ -60,6 +65,7 @@ describe Api::V1::ProductsController do
             name: second.name,
             model_number: second.model_number,
             description: second.description,
+            brief_description: second.brief_description,
             manual: second.manual
           }
         ]
@@ -75,6 +81,7 @@ describe Api::V1::ProductsController do
         name: "Piston Honda",
         model_number: "1991mk2",
         description: "wavetable oscillator",
+        brief_description: "brief",
         manual: "piston manual"
       })
 
@@ -82,6 +89,7 @@ describe Api::V1::ProductsController do
         id: product.id,
         name: "New Name",
         description: "New Description",
+        brief_description: "brief",
         manual: "New Manual"
       }
 
@@ -97,6 +105,7 @@ describe Api::V1::ProductsController do
           name: update_attributes[:name],
           model_number: product.model_number,
           description: update_attributes[:description],
+          brief_description: update_attributes[:brief_description],
           manual: update_attributes[:manual]
         },
       }
@@ -111,6 +120,7 @@ describe Api::V1::ProductsController do
         name: "Piston Honda",
         model_number: "1991mk2",
         description: "wavetable oscillator",
+        brief_description: "brief",
         manual: "Piston Manual"
       }
 
@@ -120,6 +130,7 @@ describe Api::V1::ProductsController do
       expect(product.name).to eq(create_attributes[:name])
       expect(product.model_number).to eq(create_attributes[:model_number])
       expect(product.description).to eq(create_attributes[:description])
+      expect(product.brief_description).to eq(create_attributes[:brief_description])
 
       expected_response = {
         product: {
@@ -127,6 +138,7 @@ describe Api::V1::ProductsController do
           name: product.name,
           model_number: product.model_number,
           description: product.description,
+          brief_description: product.brief_description,
           manual: product.manual
         },
       }

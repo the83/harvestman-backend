@@ -8,6 +8,7 @@ describe ProductPresenter do
       name: "foo",
       model_number: "bar",
       description: "baz",
+      brief_description: "brief",
       manual: "buz"
     })
 
@@ -16,7 +17,8 @@ describe ProductPresenter do
       name: product.name,
       model_number: product.model_number,
       description: product.description,
-      manual: product.manual
+      manual: product.manual,
+      brief_description: product.brief_description
     }).to_json
 
     expect(ProductPresenter.new(product).to_json).to eq(presented)
