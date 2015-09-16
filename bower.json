@@ -1,0 +1,16 @@
+{
+  "name": "harvestman-backend",
+  "version": "0.0.0",
+  "homepage": "https://github.com/the83/harvestman-backend",
+  "authors": [
+    "theron humiston <foo@bar.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

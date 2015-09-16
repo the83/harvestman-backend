@@ -1,0 +1,26 @@
+{
+  "name": "harvestman-backend",
+  "version": "1.0.0",
+  "description": "Install Postgres database",
+  "main": "index.js",
+  "private": true,
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/the83/harvestman-backend.git"
+  },
+  "author": "",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/the83/harvestman-backend/issues"
+  },
+  "homepage": "https://github.com/the83/harvestman-backend#readme",
+  "dependencies": {
+    "bower": "^1.5.2"
+  }
+}
