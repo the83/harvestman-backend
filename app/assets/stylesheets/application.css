@@ -12,4 +12,6 @@
  *
  *= require_tree .
  *= require_self
+ *= require harvestman/dist/assets/vendor
+ *= require harvestman/dist/assets/harvestman
  */

@@ -11,7 +11,7 @@ describe Page do
   it "sanitizes the permalink" do
     Page.create({ permalink: "sOme Rand!om G@arbagE !!%^* #*", content: "bar", title: "baz" })
     page = Page.last
-    page.permalink.should eq("some-random-garbage")
+    expect(page.permalink).to eq("some-random-garbage")
   end
 
   it "requires a permalink" do

@@ -14,3 +14,5 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+//= require harvestman/dist/assets/vendor
+//= require harvestman/dist/assets/harvestman

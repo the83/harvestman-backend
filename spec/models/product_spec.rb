@@ -30,4 +30,21 @@ describe Product do
       Product.new({ name: "buz", model_number: "bar" })
     ).to_not be_valid
   end
+
+  it "belongs to an instrument" do
+     instrument = Instrument.create!({
+       name: "instrument name",
+       permalink: "instrument-permalink"
+     })
+
+     product = Product.create!({
+      name: "foo",
+      model_number: "bar",
+      description: "baz",
+      instrument: instrument
+    })
+
+    product.reload
+    expect(product.instrument).to eq(instrument)
+  end
 end

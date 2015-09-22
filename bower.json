@@ -12,5 +12,8 @@
     "bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "devDependencies": {
+    "harvestman": "https://github.com/the83/harvestman.git"
+  }
 }

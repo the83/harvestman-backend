@@ -1,11 +1,10 @@
-class ProductPresenter < BasePresenter
+class InstrumentPresenter < BasePresenter
   def attributes
     {
       id: @object.id,
+      permalink: @object.permalink,
       name: @object.name,
-      model_number: @object.model_number,
       description: @object.description,
-      manual: @object.manual,
       brief_description: @object.brief_description
     }
   end

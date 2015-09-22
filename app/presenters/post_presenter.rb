@@ -1,4 +1,4 @@
-class PagePresenter < BasePresenter
+class PostPresenter < BasePresenter
   def attributes
     {
       id: @object.id,
