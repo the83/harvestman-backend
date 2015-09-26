@@ -1,10 +1,21 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
-      resources :products
-      resources :pages
-      resources :posts
-      resources :instruments
+      resources :products do
+        resources :images, controller: 'images'
+      end
+
+      resources :pages do
+        resources :images, controller: 'images'
+      end
+
+      resources :posts do
+        resources :images, controller: 'images'
+      end
+
+      resources :instruments do
+        resources :images, controller: 'images'
+      end
 
       resources :tags, only: [] do
         collection do
@@ -14,7 +25,6 @@ Rails.application.routes.draw do
           match({ '/:type/:id' => 'tags#destroy', via: :delete })
         end
       end
-
     end
   end
 end

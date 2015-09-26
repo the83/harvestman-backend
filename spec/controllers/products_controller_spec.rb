@@ -106,7 +106,6 @@ describe Api::V1::ProductsController do
       product.reload
       expect(product.name).to eq(update_attributes[:name])
       expect(product.description).to eq(update_attributes[:description])
-      expect(product.tag_list).to eq(update_attributes[:tag_list])
 
       expected_response = {
         product: {
