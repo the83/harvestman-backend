@@ -8,7 +8,8 @@ class Api::V1::ProductsController < ApplicationController
     :description,
     :brief_description,
     :model_number,
-    :manual
+    :manual,
+    :tag_list => []
   ].freeze
 
   def show

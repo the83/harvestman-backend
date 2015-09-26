@@ -1,5 +1,10 @@
 class Api::V1::PostsController < ApplicationController
-  PARAMS_WHITELIST = [:permalink, :content, :title].freeze
+  PARAMS_WHITELIST = [
+    :permalink,
+    :content,
+    :title,
+    :tag_list => []
+  ].freeze
 
   def index
     posts = Post.all.map { |p| PostPresenter.new(p) }

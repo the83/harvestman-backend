@@ -8,6 +8,18 @@ describe Post do
     }.to change { Post.count }.by(1)
   end
 
+  it "has tags" do
+    post = Post.create({
+      permalink: "foo",
+      content: "bar",
+      title: "baz",
+      tag_list: ["tag1", "tag2"]
+    })
+
+    post.reload
+    expect(post.tag_list).to eq(["tag1", "tag2"])
+  end
+
   it "sanitizes the permalink" do
     Post.create({ permalink: "sOme Rand!om G@arbagE !!%^* #*", content: "bar", title: "baz" })
     page = Post.last
@@ -45,5 +57,4 @@ describe Post do
       Post.create({ permalink: "foo", title: "bar" })
     }.to_not change { Post.count }
   end
-
 end

@@ -32,12 +32,12 @@ describe Product do
   end
 
   it "belongs to an instrument" do
-     instrument = Instrument.create!({
-       name: "instrument name",
-       permalink: "instrument-permalink"
-     })
+    instrument = Instrument.create!({
+      name: "instrument name",
+      permalink: "instrument-permalink"
+    })
 
-     product = Product.create!({
+    product = Product.create!({
       name: "foo",
       model_number: "bar",
       description: "baz",
@@ -46,5 +46,17 @@ describe Product do
 
     product.reload
     expect(product.instrument).to eq(instrument)
+  end
+
+  it "has tags" do
+    product = Product.create!({
+      name: "foo",
+      model_number: "bar",
+      description: "baz",
+      tag_list: ["tag1", "tag2"]
+    })
+
+    product.reload
+    expect(product.tag_list).to eq(["tag1", "tag2"])
   end
 end

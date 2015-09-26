@@ -6,6 +6,17 @@ gem 'uglifier', '>= 1.3.0'
 gem 'jbuilder', '~> 2.0'
 gem "rack-cors", require: "rack/cors"
 
+# file uploads
+gem "carrierwave"
+gem "fog"
+gem "unf"
+
+# tags
+gem 'acts-as-taggable-on'
+
+#search
+gem 'textacular'
+
 group :development do
   gem 'spring'
 end

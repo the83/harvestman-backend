@@ -7,7 +7,8 @@ describe Api::V1::PostsController do
       post = Post.create!({
         permalink: "foo",
         title: "baz",
-        content: "bar"
+        content: "bar",
+        tag_list: ["tag1", "tag2"]
       })
 
       get :show, { id: post.id }
@@ -18,6 +19,7 @@ describe Api::V1::PostsController do
           permalink: post.permalink,
           title: post.title,
           content: post.content,
+          tag_list: post.tag_list
         }
       }
 
@@ -31,13 +33,15 @@ describe Api::V1::PostsController do
       first = Post.create!({
         permalink: "foo",
         title: "baz",
-        content: "bar"
+        content: "bar",
+        tag_list: ["tag1", "tag2"]
       })
 
       second = Post.create!({
         permalink: "foo2",
         title: "baz2",
-        content: "bar2"
+        content: "bar2",
+        tag_list: ["tag1", "tag2"]
       })
 
       get :index
@@ -48,13 +52,15 @@ describe Api::V1::PostsController do
             id: first.id,
             permalink: first.permalink,
             title: first.title,
-            content: first.content
+            content: first.content,
+            tag_list: first.tag_list
           },
           {
             id: second.id,
             permalink: second.permalink,
             title: second.title,
-            content: second.content
+            content: second.content,
+            tag_list: second.tag_list
           }
         ]
       }
@@ -68,14 +74,16 @@ describe Api::V1::PostsController do
       post = Post.create!({
         permalink: "foo",
         title: "baz",
-        content: "bar"
+        content: "bar",
+        tag_list: ["tag1", "tag2"]
       })
 
       update_attributes = {
         id: post.id,
         permalink: "new-permalink",
         title: "new title",
-        content: "new content"
+        content: "new content",
+        tag_list: ["newtag1", "newtag2"]
       }
 
       put :update, { id: post.id, post: update_attributes }
@@ -90,7 +98,8 @@ describe Api::V1::PostsController do
           id: post.id,
           permalink: update_attributes[:permalink],
           title: update_attributes[:title],
-          content: update_attributes[:content]
+          content: update_attributes[:content],
+          tag_list: update_attributes[:tag_list]
         },
       }
       parsed_response = JSON.parse(response.body, { symbolize_names: true })
@@ -103,7 +112,8 @@ describe Api::V1::PostsController do
       create_attributes = {
         permalink: "foo",
         title: "baz",
-        content: "bar"
+        content: "bar",
+        tag_list: ["tag1", "tag2"]
       }
 
       post :create, { post: create_attributes }
@@ -119,6 +129,7 @@ describe Api::V1::PostsController do
           permalink: post.permalink,
           title: post.title,
           content: post.content,
+          tag_list: post.tag_list
         }
       }
 

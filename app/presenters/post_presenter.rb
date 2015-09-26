@@ -4,7 +4,8 @@ class PostPresenter < BasePresenter
       id: @object.id,
       permalink: @object.permalink,
       title: @object.title,
-      content: @object.content
+      content: @object.content,
+      tag_list: @object.tag_list
     }
   end
 end

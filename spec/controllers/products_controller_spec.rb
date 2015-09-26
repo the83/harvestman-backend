@@ -9,7 +9,8 @@ describe Api::V1::ProductsController do
         model_number: "bar",
         description: "baz",
         brief_description: "brief",
-        manual: "buz"
+        manual: "buz",
+        tag_list: ["tag1", "tag2"]
       })
 
       get :show, { id: product.id }
@@ -21,7 +22,8 @@ describe Api::V1::ProductsController do
           model_number: product.model_number,
           description: product.description,
           brief_description: product.brief_description,
-          manual: product.manual
+          manual: product.manual,
+          tag_list: product.tag_list
         }
       }
 
@@ -37,7 +39,8 @@ describe Api::V1::ProductsController do
         model_number: "1991mk2",
         description: "wavetable oscillator",
         brief_description: "brief",
-        manual: "piston honda manual"
+        manual: "piston honda manual",
+        tag_list: ["tag1", "tag2"]
       })
 
       second = Product.create!({
@@ -45,7 +48,8 @@ describe Api::V1::ProductsController do
         model_number: "9792mk2",
         description: "complex oscillator",
         brief_description: "brief",
-        manual: "Hertz Manual"
+        manual: "Hertz Manual",
+        tag_list: ["tag1", "tag2"]
       })
 
       get :index
@@ -58,7 +62,8 @@ describe Api::V1::ProductsController do
             model_number: first.model_number,
             description: first.description,
             brief_description: first.brief_description,
-            manual: first.manual
+            manual: first.manual,
+            tag_list: first.tag_list
           },
           {
             id: second.id,
@@ -66,7 +71,8 @@ describe Api::V1::ProductsController do
             model_number: second.model_number,
             description: second.description,
             brief_description: second.brief_description,
-            manual: second.manual
+            manual: second.manual,
+            tag_list: second.tag_list
           }
         ]
       }
@@ -82,7 +88,8 @@ describe Api::V1::ProductsController do
         model_number: "1991mk2",
         description: "wavetable oscillator",
         brief_description: "brief",
-        manual: "piston manual"
+        manual: "piston manual",
+        tag_list: ["tag1", "tag2"]
       })
 
       update_attributes = {
@@ -90,7 +97,8 @@ describe Api::V1::ProductsController do
         name: "New Name",
         description: "New Description",
         brief_description: "brief",
-        manual: "New Manual"
+        manual: "New Manual",
+        tag_list: ["newtag1", "newtag2"]
       }
 
       put :update, { id: product.id, product: update_attributes }
@@ -98,6 +106,7 @@ describe Api::V1::ProductsController do
       product.reload
       expect(product.name).to eq(update_attributes[:name])
       expect(product.description).to eq(update_attributes[:description])
+      expect(product.tag_list).to eq(update_attributes[:tag_list])
 
       expected_response = {
         product: {
@@ -106,7 +115,8 @@ describe Api::V1::ProductsController do
           model_number: product.model_number,
           description: update_attributes[:description],
           brief_description: update_attributes[:brief_description],
-          manual: update_attributes[:manual]
+          manual: update_attributes[:manual],
+          tag_list: update_attributes[:tag_list]
         },
       }
       parsed_response = JSON.parse(response.body, { symbolize_names: true })
@@ -121,7 +131,8 @@ describe Api::V1::ProductsController do
         model_number: "1991mk2",
         description: "wavetable oscillator",
         brief_description: "brief",
-        manual: "Piston Manual"
+        manual: "Piston Manual",
+        tag_list: ["tag1", "tag2"]
       }
 
       post :create, { product: create_attributes }
@@ -139,7 +150,8 @@ describe Api::V1::ProductsController do
           model_number: product.model_number,
           description: product.description,
           brief_description: product.brief_description,
-          manual: product.manual
+          manual: product.manual,
+          tag_list: product.tag_list
         },
       }
 
