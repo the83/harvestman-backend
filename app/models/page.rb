@@ -4,4 +4,5 @@ class Page < ActiveRecord::Base
   validates :title, presence: true
   include PermalinkSanitizer
   before_save { sanitize_permalink! }
+  mount_uploaders :images, ImageUploader
 end

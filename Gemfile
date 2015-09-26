@@ -7,7 +7,7 @@ gem 'jbuilder', '~> 2.0'
 gem "rack-cors", require: "rack/cors"
 
 # file uploads
-gem "carrierwave"
+gem 'carrierwave', github: 'carrierwaveuploader/carrierwave'
 gem "fog"
 gem "unf"
 

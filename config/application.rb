@@ -14,5 +14,7 @@ module HarvestmanBackend
 
     config.autoload_paths += Dir["#{config.root}/app/presenters/**/"]
     config.autoload_paths += Dir["#{config.root}/lib/**/"]
+
+    config.active_record.raise_in_transactional_callbacks = true
   end
 end

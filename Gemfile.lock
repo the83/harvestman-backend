@@ -1,3 +1,13 @@
+GIT
+  remote: git://github.com/carrierwaveuploader/carrierwave.git
+  revision: 1e4e7b0bf20fee70d8ac3815d0921144f39e14cf
+  specs:
+    carrierwave (0.10.0)
+      activemodel (>= 3.2.0)
+      activesupport (>= 3.2.0)
+      json (>= 1.7)
+      mime-types (>= 1.16)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -42,11 +52,6 @@ GEM
     arel (6.0.3)
     builder (3.2.2)
     byebug (6.0.2)
-    carrierwave (0.10.0)
-      activemodel (>= 3.2.0)
-      activesupport (>= 3.2.0)
-      json (>= 1.7)
-      mime-types (>= 1.16)
     diff-lcs (1.2.5)
     erubis (2.7.0)
     excon (0.45.4)
@@ -168,7 +173,7 @@ GEM
       mime-types (>= 1.16, < 3)
     mime-types (2.6.2)
     mini_portile (0.6.2)
-    minitest (5.8.0)
+    minitest (5.8.1)
     multi_json (1.11.2)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
@@ -223,8 +228,8 @@ GEM
       rspec-support (~> 3.3.0)
     rspec-support (3.3.0)
     spring (1.4.0)
-    sprockets (3.3.4)
-      rack (~> 1.0)
+    sprockets (3.3.5)
+      rack (> 1, < 3)
     sprockets-rails (2.3.3)
       actionpack (>= 3.0)
       activesupport (>= 3.0)
@@ -248,7 +253,7 @@ PLATFORMS
 DEPENDENCIES
   acts-as-taggable-on
   byebug
-  carrierwave
+  carrierwave!
   fog
   jbuilder (~> 2.0)
   pg (= 0.15.1)

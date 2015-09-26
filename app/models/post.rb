@@ -7,4 +7,6 @@ class Post < ActiveRecord::Base
 
   include PermalinkSanitizer
   before_save { sanitize_permalink! }
+
+  mount_uploaders :images, ImageUploader
 end

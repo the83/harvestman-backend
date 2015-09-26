@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150926154331) do
+ActiveRecord::Schema.define(version: 20150926170143) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 20150926154331) do
     t.text     "content"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.json     "images"
   end
 
   create_table "posts", force: :cascade do |t|
@@ -39,6 +40,7 @@ ActiveRecord::Schema.define(version: 20150926154331) do
     t.text     "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.json     "images"
   end
 
   create_table "products", force: :cascade do |t|
@@ -50,6 +52,7 @@ ActiveRecord::Schema.define(version: 20150926154331) do
     t.text     "manual"
     t.string   "brief_description"
     t.integer  "instrument_id"
+    t.json     "images"
   end
 
   add_index "products", ["instrument_id"], name: "index_products_on_instrument_id", using: :btree
