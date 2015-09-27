@@ -23,7 +23,8 @@ describe Api::V1::ProductsController do
           description: product.description,
           brief_description: product.brief_description,
           manual: product.manual,
-          tag_list: product.tag_list
+          tag_list: product.tag_list,
+          images: []
         }
       }
 
@@ -63,7 +64,8 @@ describe Api::V1::ProductsController do
             description: first.description,
             brief_description: first.brief_description,
             manual: first.manual,
-            tag_list: first.tag_list
+            tag_list: first.tag_list,
+            images: []
           },
           {
             id: second.id,
@@ -72,7 +74,8 @@ describe Api::V1::ProductsController do
             description: second.description,
             brief_description: second.brief_description,
             manual: second.manual,
-            tag_list: second.tag_list
+            tag_list: second.tag_list,
+            images: []
           }
         ]
       }
@@ -115,7 +118,8 @@ describe Api::V1::ProductsController do
           description: update_attributes[:description],
           brief_description: update_attributes[:brief_description],
           manual: update_attributes[:manual],
-          tag_list: update_attributes[:tag_list]
+          tag_list: update_attributes[:tag_list],
+          images: []
         },
       }
       parsed_response = JSON.parse(response.body, { symbolize_names: true })
@@ -150,7 +154,8 @@ describe Api::V1::ProductsController do
           description: product.description,
           brief_description: product.brief_description,
           manual: product.manual,
-          tag_list: product.tag_list
+          tag_list: product.tag_list,
+          images: []
         },
       }
 

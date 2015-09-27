@@ -5,16 +5,12 @@ class Api::V1::ImagesController < ApplicationController
     :image
   ].freeze
 
-  def index
-    head 404 unless parent
-    render({ json: { images: parent.images } })
-  end
-
   def create
     head 404 unless parent
-    parent.images << Image.create(image: params[:image])
+    image = Image.create(image: params[:image])
+    parent.images << image
     if parent.save!
-      render({ json: { images: parent.images } })
+      render({ json: { image: ImagePresenter.new(image) } })
     end
   end
 

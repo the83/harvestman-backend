@@ -7,7 +7,14 @@ class ProductPresenter < BasePresenter
       description: @object.description,
       manual: @object.manual,
       brief_description: @object.brief_description,
-      tag_list: @object.tag_list
+      tag_list: @object.tag_list,
+      images: present_images(@object.images)
     }
+  end
+
+  private
+
+  def present_images(images)
+    images.map {|i| ImagePresenter.new(i) }
   end
 end
