@@ -5,6 +5,7 @@ gem 'pg', '0.15.1'
 gem 'uglifier', '>= 1.3.0'
 gem 'jbuilder', '~> 2.0'
 gem "rack-cors", require: "rack/cors"
+gem "activesupport-json_encoder"
 
 # file uploads
 gem 'carrierwave', github: 'carrierwaveuploader/carrierwave'

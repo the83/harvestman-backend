@@ -12,16 +12,10 @@ class Api::V1::ImagesController < ApplicationController
 
   def create
     head 404 unless parent
-    image = convert_to_upload(params[:image])
-    parent.images << image
-    render({ json: { image: image })
-
-    # if product.save
-    #   render({ json: { product: ProductPresenter.new(product) } })
-    # else
-    #   render({ status: 400, json: {
-    #     status: 400, error: "Error creating product." } })
-    # end
+    parent.images << Image.create(image: params[:image])
+    if parent.save!
+      render({ json: { images: parent.images } })
+    end
   end
 
   def destroy
@@ -47,16 +41,17 @@ class Api::V1::ImagesController < ApplicationController
   end
 
   def convert_to_upload(image)
-    image_data = split_base64(image[:data])
+    # image_data = split_base64(image)
 
-    temp_img_file = Tempfile.new("data_uri-upload")
+    temp_img_file = image.tempfile
     temp_img_file.binmode
-    temp_img_file << Base64.decode64(image_data[:data])
     temp_img_file.rewind
+    # temp_img_file << Base64.decode64(image.tempfile)
+    # temp_img_file.rewind
 
     ActionDispatch::Http::UploadedFile.new({
-      filename: image[:filename],
-      type: image[:type],
+      filename: image.original_filename,
+      type: image.content_type,
       tempfile: temp_img_file
     })
   end

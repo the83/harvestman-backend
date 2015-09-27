@@ -11,10 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150926170143) do
+ActiveRecord::Schema.define(version: 20150927181741) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "images", force: :cascade do |t|
+    t.string   "image"
+    t.integer  "imageable_id"
+    t.string   "imageable_type"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "images", ["imageable_type", "imageable_id"], name: "index_images_on_imageable_type_and_imageable_id", using: :btree
 
   create_table "instruments", force: :cascade do |t|
     t.string   "name"
@@ -31,7 +41,6 @@ ActiveRecord::Schema.define(version: 20150926170143) do
     t.text     "content"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.json     "images"
   end
 
   create_table "posts", force: :cascade do |t|
@@ -40,7 +49,6 @@ ActiveRecord::Schema.define(version: 20150926170143) do
     t.text     "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.json     "images"
   end
 
   create_table "products", force: :cascade do |t|
@@ -52,7 +60,6 @@ ActiveRecord::Schema.define(version: 20150926170143) do
     t.text     "manual"
     t.string   "brief_description"
     t.integer  "instrument_id"
-    t.json     "images"
   end
 
   add_index "products", ["instrument_id"], name: "index_products_on_instrument_id", using: :btree
