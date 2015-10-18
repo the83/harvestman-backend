@@ -15,6 +15,6 @@ class ProductPresenter < BasePresenter
   private
 
   def present_images(images)
-    images.map {|i| ImagePresenter.new(i) }
+    images.order(created_at: :asc).map {|i| ImagePresenter.new(i) }
   end
 end
