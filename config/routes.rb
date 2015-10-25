@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
+  devise_for :users, controllers: { sessions: 'sessions' }
+
   namespace :api do
+    get :csrf, to: 'csrf#index'
+
     namespace :v1 do
       resources :products do
         resources :images, controller: 'images'

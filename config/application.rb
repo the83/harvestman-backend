@@ -8,6 +8,13 @@ Bundler.require(*Rails.groups)
 
 module HarvestmanBackend
   class Application < Rails::Application
+    config.middleware.insert_before 0, "Rack::Cors" do
+      allow do
+        origins '*'
+        resource '*', :headers => :any, :methods => [:get, :post, :options]
+      end
+    end
+
     Dir.glob("#{Rails.root.join("bower_components")}/**/").sort.each do |dir|
       config.assets.paths << dir
     end
