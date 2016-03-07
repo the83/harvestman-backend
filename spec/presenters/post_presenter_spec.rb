@@ -16,7 +16,8 @@ describe PostPresenter do
       permalink: post.permalink,
       title: post.title,
       content: post.content,
-      tag_list: post.tag_list
+      tag_list: post.tag_list,
+      images: []
     }).to_json
 
     expect(PostPresenter.new(post).to_json).to eq(presented)

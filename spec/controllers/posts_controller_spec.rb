@@ -19,7 +19,8 @@ describe Api::V1::PostsController do
           permalink: post.permalink,
           title: post.title,
           content: post.content,
-          tag_list: post.tag_list
+          tag_list: post.tag_list,
+          images: []
         }
       }
 
@@ -53,14 +54,16 @@ describe Api::V1::PostsController do
             permalink: first.permalink,
             title: first.title,
             content: first.content,
-            tag_list: first.tag_list
+            tag_list: first.tag_list,
+            images: []
           },
           {
             id: second.id,
             permalink: second.permalink,
             title: second.title,
             content: second.content,
-            tag_list: second.tag_list
+            tag_list: second.tag_list,
+            images: []
           }
         ]
       }
@@ -83,7 +86,8 @@ describe Api::V1::PostsController do
         permalink: "new-permalink",
         title: "new title",
         content: "new content",
-        tag_list: ["newtag1", "newtag2"]
+        tag_list: ["newtag1", "newtag2"],
+        images: []
       }
 
       put :update, { id: post.id, post: update_attributes }
@@ -99,7 +103,8 @@ describe Api::V1::PostsController do
           permalink: update_attributes[:permalink],
           title: update_attributes[:title],
           content: update_attributes[:content],
-          tag_list: update_attributes[:tag_list]
+          tag_list: update_attributes[:tag_list],
+          images: []
         },
       }
       parsed_response = JSON.parse(response.body, { symbolize_names: true })
@@ -129,7 +134,8 @@ describe Api::V1::PostsController do
           permalink: post.permalink,
           title: post.title,
           content: post.content,
-          tag_list: post.tag_list
+          tag_list: post.tag_list,
+          images: []
         }
       }
 
