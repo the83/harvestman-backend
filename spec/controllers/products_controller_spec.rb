@@ -10,7 +10,8 @@ describe Api::V1::ProductsController do
         description: "baz",
         brief_description: "brief",
         manual: "buz",
-        tag_list: ["tag1", "tag2"]
+        tag_list: ["tag1", "tag2"],
+        features: "some features"
       })
 
       get :show, { id: product.id }
@@ -24,7 +25,8 @@ describe Api::V1::ProductsController do
           brief_description: product.brief_description,
           manual: product.manual,
           tag_list: product.tag_list,
-          images: []
+          images: [],
+          features: "some features"
         }
       }
 
@@ -41,7 +43,8 @@ describe Api::V1::ProductsController do
         description: "wavetable oscillator",
         brief_description: "brief",
         manual: "piston honda manual",
-        tag_list: ["tag1", "tag2"]
+        tag_list: ["tag1", "tag2"],
+        features: "some features"
       })
 
       second = Product.create!({
@@ -50,7 +53,8 @@ describe Api::V1::ProductsController do
         description: "complex oscillator",
         brief_description: "brief",
         manual: "Hertz Manual",
-        tag_list: ["tag1", "tag2"]
+        tag_list: ["tag1", "tag2"],
+        features: "some other features"
       })
 
       get :index
@@ -65,7 +69,8 @@ describe Api::V1::ProductsController do
             brief_description: first.brief_description,
             manual: first.manual,
             tag_list: first.tag_list,
-            images: []
+            images: [],
+            features: first.features
           },
           {
             id: second.id,
@@ -75,7 +80,8 @@ describe Api::V1::ProductsController do
             brief_description: second.brief_description,
             manual: second.manual,
             tag_list: second.tag_list,
-            images: []
+            images: [],
+            features: second.features
           }
         ]
       }
@@ -92,7 +98,8 @@ describe Api::V1::ProductsController do
         description: "wavetable oscillator",
         brief_description: "brief",
         manual: "piston manual",
-        tag_list: ["tag1", "tag2"]
+        tag_list: ["tag1", "tag2"],
+        features: "some features"
       })
 
       update_attributes = {
@@ -101,7 +108,8 @@ describe Api::V1::ProductsController do
         description: "New Description",
         brief_description: "brief",
         manual: "New Manual",
-        tag_list: ["newtag1", "newtag2"]
+        tag_list: ["newtag1", "newtag2"],
+        features: "new features"
       }
 
       put :update, { id: product.id, product: update_attributes }
@@ -119,7 +127,8 @@ describe Api::V1::ProductsController do
           brief_description: update_attributes[:brief_description],
           manual: update_attributes[:manual],
           tag_list: update_attributes[:tag_list],
-          images: []
+          images: [],
+          features: update_attributes[:features]
         },
       }
       parsed_response = JSON.parse(response.body, { symbolize_names: true })
@@ -135,7 +144,8 @@ describe Api::V1::ProductsController do
         description: "wavetable oscillator",
         brief_description: "brief",
         manual: "Piston Manual",
-        tag_list: ["tag1", "tag2"]
+        tag_list: ["tag1", "tag2"],
+        features: "some features"
       }
 
       post :create, { product: create_attributes }
@@ -145,6 +155,7 @@ describe Api::V1::ProductsController do
       expect(product.model_number).to eq(create_attributes[:model_number])
       expect(product.description).to eq(create_attributes[:description])
       expect(product.brief_description).to eq(create_attributes[:brief_description])
+      expect(product.features).to eq(create_attributes[:features])
 
       expected_response = {
         product: {
@@ -155,7 +166,8 @@ describe Api::V1::ProductsController do
           brief_description: product.brief_description,
           manual: product.manual,
           tag_list: product.tag_list,
-          images: []
+          images: [],
+          features: "some features"
         },
       }
 

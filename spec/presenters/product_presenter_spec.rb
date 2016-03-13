@@ -10,7 +10,8 @@ describe ProductPresenter do
       description: "baz",
       brief_description: "brief",
       manual: "buz",
-      tag_list: ["tag1", "tag2"]
+      tag_list: ["tag1", "tag2"],
+      features: "some features"
     })
 
     presented = ({
@@ -21,7 +22,8 @@ describe ProductPresenter do
       manual: product.manual,
       brief_description: product.brief_description,
       tag_list: product.tag_list,
-      images: []
+      images: [],
+      features: product.features
     }).to_json
 
     expect(ProductPresenter.new(product).to_json).to eq(presented)

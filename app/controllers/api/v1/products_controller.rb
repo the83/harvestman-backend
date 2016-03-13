@@ -9,6 +9,7 @@ class Api::V1::ProductsController < ApplicationController
     :brief_description,
     :model_number,
     :manual,
+    :features,
     :tag_list => []
   ].freeze
 

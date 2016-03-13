@@ -8,7 +8,8 @@ class ProductPresenter < BasePresenter
       manual: @object.manual,
       brief_description: @object.brief_description,
       tag_list: @object.tag_list,
-      images: present_images(@object.images)
+      images: present_images(@object.images),
+      features: @object.features
     }
   end
 
