@@ -8,10 +8,15 @@ gem 'rack-cors', require: 'rack/cors'
 gem 'activesupport-json_encoder'
 gem 'devise', '3.5.2'
 
+# # file uploads
+# gem 'carrierwave', github: 'carrierwaveuploader/carrierwave'
+# gem 'fog', require: 'fog/aws'
+# gem 'unf'
+
 # file uploads
-gem 'carrierwave', github: 'carrierwaveuploader/carrierwave'
-gem 'fog'
-gem 'unf'
+gem "carrierwave", "0.10.0"
+gem "fog"
+gem "unf"
 
 # tags
 gem 'acts-as-taggable-on'
