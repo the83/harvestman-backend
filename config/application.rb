@@ -15,10 +15,6 @@ module HarvestmanBackend
       end
     end
 
-    Dir.glob("#{Rails.root.join("bower_components")}/**/").sort.each do |dir|
-      config.assets.paths << dir
-    end
-
     config.autoload_paths += Dir["#{config.root}/app/presenters/**/"]
     config.autoload_paths += Dir["#{config.root}/lib/**/"]
 
