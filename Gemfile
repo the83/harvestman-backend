@@ -32,3 +32,7 @@ group :development, :test do
   gem 'byebug'
   gem 'rspec-rails'
 end
+
+group :production do
+  gem 'rails_12factor', group: :production
+end
