@@ -5,7 +5,9 @@ class Post < ActiveRecord::Base
 
   acts_as_ordered_taggable
 
+  has_many :images, :as => :imageable
+  accepts_nested_attributes_for :images, :allow_destroy => :true
+
   include PermalinkSanitizer
   before_save { sanitize_permalink! }
-  has_many :images, :as => :imageable
 end

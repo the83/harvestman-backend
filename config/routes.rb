@@ -5,21 +5,17 @@ Rails.application.routes.draw do
     get :csrf, to: 'csrf#index'
 
     namespace :v1 do
-      resources :products do
-        resources :images, controller: 'images'
+      resources :images do
+        post :create
       end
 
-      resources :pages do
-        resources :images, controller: 'images'
-      end
+      resources :products
 
-      resources :posts do
-        resources :images, controller: 'images'
-      end
+      resources :pages
 
-      resources :instruments do
-        resources :images, controller: 'images'
-      end
+      resources :posts
+
+      resources :instruments
 
       resources :tags, only: [] do
         collection do

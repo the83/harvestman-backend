@@ -1,8 +1,6 @@
 require "product_presenter"
 
 class Api::V1::ProductsController < ApplicationController
-  CREATE_PARAMS_WHITELIST = []
-
   UPDATE_PARAMS_WHITELIST = [
     :name,
     :description,
@@ -10,7 +8,8 @@ class Api::V1::ProductsController < ApplicationController
     :model_number,
     :manual,
     :features,
-    :tag_list => []
+    tag_list: [],
+    images_attributes: [:id, :image],
   ].freeze
 
   def show
@@ -31,8 +30,10 @@ class Api::V1::ProductsController < ApplicationController
   end
 
   def create
-    product = Product.new(create_params)
+    product = Product.new(create_params.except(:images_attributes))
+
     if product.save
+      build_images_for(product)
       render({ json: { product: ProductPresenter.new(product) } })
     else
       render({ status: 400, json: {
@@ -48,12 +49,19 @@ class Api::V1::ProductsController < ApplicationController
 
   private
 
+  def build_images_for(model)
+    return if images_attributes.blank?
+    images_attributes = create_params.slice(:images_attributes)
+    images_attributes["images_attributes"].each do |p|
+      model.images << Image.find_by_id(p["id"])
+    end
+  end
+
   def update_params
     params.required(:product).permit(*UPDATE_PARAMS_WHITELIST)
   end
 
   def create_params
-    whitelist = UPDATE_PARAMS_WHITELIST + CREATE_PARAMS_WHITELIST
-    params.required(:product).permit(*whitelist)
+    params.required(:product).permit(*UPDATE_PARAMS_WHITELIST)
   end
 end

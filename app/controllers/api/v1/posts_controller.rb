@@ -3,7 +3,8 @@ class Api::V1::PostsController < ApplicationController
     :permalink,
     :content,
     :title,
-    :tag_list => []
+    :tag_list => [],
+    images_attributes: [:id, :image],
   ].freeze
 
   def index
@@ -19,9 +20,10 @@ class Api::V1::PostsController < ApplicationController
   end
 
   def create
-    post = Post.new(whitelisted_params)
+    post = Post.new(whitelisted_params.except(:images_attributes))
 
     if post.save
+      build_images_for(post)
       render({ json: { post: PostPresenter.new(post) } })
     else
       render({ status: 400, json: {
@@ -43,7 +45,15 @@ class Api::V1::PostsController < ApplicationController
 
   private
 
+  def build_images_for(model)
+    images_attributes = whitelisted_params.slice(:images_attributes)
+    return if images_attributes.blank?
+    images_attributes["images_attributes"].each do |p|
+      model.images << Image.find_by_id(p["id"])
+    end
+  end
+
   def whitelisted_params
-    params.require(:post).permit(PARAMS_WHITELIST)
+    params.required(:post).permit(*PARAMS_WHITELIST)
   end
 end
