@@ -16,6 +16,8 @@ class Api::V1::PostsController < ApplicationController
     post = Post.find_by_permalink(params[:id]) ||
       Post.find_by_id(params[:id])
 
+    return head 404 unless post
+
     render({ json: { post: PostPresenter.new(post) } })
   end
 

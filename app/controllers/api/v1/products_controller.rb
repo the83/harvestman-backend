@@ -14,6 +14,8 @@ class Api::V1::ProductsController < ApplicationController
 
   def show
     product = Product.find_by_id(params[:id])
+    return head 404 unless product
+
     render({ json: { product: ProductPresenter.new(product) } })
   end
 

@@ -15,6 +15,8 @@ class Api::V1::InstrumentsController < ApplicationController
     instrument = Instrument.find_by_permalink(params[:id]) ||
       Instrument.find_by_id(params[:id])
 
+    return head 404 unless instrument
+
     render({ json: { instrument: InstrumentPresenter.new(instrument) } })
   end
 
