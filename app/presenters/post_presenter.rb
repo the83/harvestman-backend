@@ -6,7 +6,10 @@ class PostPresenter < BasePresenter
       title: @object.title,
       content: @object.content,
       tag_list: @object.tag_list,
-      images: present_images(@object.images)
+      images: present_images(@object.images),
+      date: @object.created_at.in_time_zone(
+        "Pacific Time (US & Canada)"
+      ).strftime('%b %d, %Y')
     }
   end
 
