@@ -1,11 +1,7 @@
 # encoding: utf-8
 
 class ImageUploader < CarrierWave::Uploader::Base
-  if Rails.env.test? || Rails.env.development?
-    storage :file
-  else
-    storage :fog
-  end
+  storage :fog
 
   def extension_white_list
     %w(jpg jpeg gif png)
