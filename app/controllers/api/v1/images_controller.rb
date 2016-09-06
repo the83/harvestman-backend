@@ -11,9 +11,8 @@ class Api::V1::ImagesController < ApplicationController
   end
 
   def destroy
-    # product = Product.find_by_id(params[:id])
-    # product.destroy!
-    # head 204
+    image = Image.find_by_id(params[:id])
+    head 204 if (image.destroy!)
   end
 
   private

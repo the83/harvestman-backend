@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :images do
         post :create
+        delete :destroy
       end
 
       resources :products
