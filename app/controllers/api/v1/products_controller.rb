@@ -52,8 +52,8 @@ class Api::V1::ProductsController < ApplicationController
   private
 
   def build_images_for(model)
-    return if images_attributes.blank?
     images_attributes = create_params.slice(:images_attributes)
+    return if images_attributes.blank?
     images_attributes["images_attributes"].each do |p|
       model.images << Image.find_by_id(p["id"])
     end
