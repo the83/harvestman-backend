@@ -11,15 +11,18 @@ describe PostPresenter do
       tag_list: ["tag1", "tag2"]
     })
 
-    presented = ({
+    expected = ({
       id: post.id,
       permalink: post.permalink,
       title: post.title,
       content: post.content,
       tag_list: post.tag_list,
-      images: []
+      images: [],
+      date: post.created_at.in_time_zone(
+        PostPresenter::TIME_ZONE
+      ).strftime(PostPresenter::TIME_FORMAT)
     }).to_json
 
-    expect(PostPresenter.new(post).to_json).to eq(presented)
+    expect(PostPresenter.new(post).to_json).to eq(expected)
   end
 end

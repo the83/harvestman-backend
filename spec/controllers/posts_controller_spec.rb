@@ -20,7 +20,10 @@ describe Api::V1::PostsController do
           title: post.title,
           content: post.content,
           tag_list: post.tag_list,
-          images: []
+          images: [],
+          date: post.created_at.in_time_zone(
+            PostPresenter::TIME_ZONE
+          ).strftime(PostPresenter::TIME_FORMAT)
         }
       }
 
@@ -55,7 +58,10 @@ describe Api::V1::PostsController do
             title: first.title,
             content: first.content,
             tag_list: first.tag_list,
-            images: []
+            images: [],
+            date: first.created_at.in_time_zone(
+              PostPresenter::TIME_ZONE
+            ).strftime(PostPresenter::TIME_FORMAT)
           },
           {
             id: second.id,
@@ -63,7 +69,10 @@ describe Api::V1::PostsController do
             title: second.title,
             content: second.content,
             tag_list: second.tag_list,
-            images: []
+            images: [],
+            date: second.created_at.in_time_zone(
+              PostPresenter::TIME_ZONE
+            ).strftime(PostPresenter::TIME_FORMAT)
           }
         ]
       }
@@ -104,7 +113,10 @@ describe Api::V1::PostsController do
           title: update_attributes[:title],
           content: update_attributes[:content],
           tag_list: update_attributes[:tag_list],
-          images: []
+          images: [],
+          date: post.created_at.in_time_zone(
+            PostPresenter::TIME_ZONE
+          ).strftime(PostPresenter::TIME_FORMAT)
         },
       }
       parsed_response = JSON.parse(response.body, { symbolize_names: true })
@@ -135,7 +147,10 @@ describe Api::V1::PostsController do
           title: post.title,
           content: post.content,
           tag_list: post.tag_list,
-          images: []
+          images: [],
+          date: post.created_at.in_time_zone(
+            PostPresenter::TIME_ZONE
+          ).strftime(PostPresenter::TIME_FORMAT)
         }
       }
 
