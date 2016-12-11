@@ -26,6 +26,8 @@ describe Api::V1::TagsController do
   end
 
   describe "#update" do
+    before(:each) { sign_in }
+
     it "sets tags for a specific product" do
       new_tags = ["some", "new", "tags"]
       expected_tags = @product.tag_list + new_tags
@@ -61,9 +63,22 @@ describe Api::V1::TagsController do
       parsed_response = JSON.parse(response.body, { symbolize_names: true })
       expect(parsed_response[:tags]).to match_array(expected_tags)
     end
+
+    context "without a signed in user" do
+      before(:each) { sign_out }
+
+      it "returns a 401" do
+        new_tags = "some, new, tags"
+        put :update, { type: "products", id: @product.id, tags: new_tags }
+        expect(response).to_not be_success
+        expect(response.code).to eq("401")
+      end
+    end
   end
 
   describe "#destroy" do
+    before(:each) { sign_in }
+
     it "removes tags for a specific product" do
       delete_me = ["foo", "bar"]
       expected_tags = @product.tag_list - delete_me
@@ -98,6 +113,17 @@ describe Api::V1::TagsController do
 
       parsed_response = JSON.parse(response.body, { symbolize_names: true })
       expect(parsed_response[:tags]).to match_array(expected_tags)
+    end
+
+    context "without a signed in user" do
+      before(:each) { sign_out }
+
+      it "returns a 401" do
+        delete_me = ["Foo"]
+        delete :destroy, { type: "products", id: @product.id, tags: delete_me }
+        expect(response).to_not be_success
+        expect(response.code).to eq("401")
+      end
     end
   end
 end

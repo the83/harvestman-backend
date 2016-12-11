@@ -1,4 +1,8 @@
 class Api::V1::InstrumentsController < ApplicationController
+  before_filter :authorize_user!, only: [:update, :create, :destroy]
+
+  respond_to :json
+
   PARAMS_WHITELIST = [
     :permalink,
     :description,

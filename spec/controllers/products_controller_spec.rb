@@ -91,8 +91,9 @@ describe Api::V1::ProductsController do
   end
 
   describe "#update" do
-    it "can update a product" do
-      product = Product.create!({
+    before(:each) { sign_in }
+    let(:product) do
+      Product.create!({
         name: "Piston Honda",
         model_number: "1991mk2",
         description: "wavetable oscillator",
@@ -101,7 +102,9 @@ describe Api::V1::ProductsController do
         tag_list: ["tag1", "tag2"],
         features: "some features"
       })
+    end
 
+    it "can update a product" do
       update_attributes = {
         id: product.id,
         name: "New Name",
@@ -134,11 +137,29 @@ describe Api::V1::ProductsController do
       parsed_response = JSON.parse(response.body, { symbolize_names: true })
       expect(parsed_response).to eq(expected_response)
     end
+
+    context "without a signed in user" do
+      before(:each) { sign_out }
+
+      it "returns a 401" do
+        update_attributes = {
+          name: "New Name",
+        }
+
+        put :update, { id: product.id, product: update_attributes }
+        expect(response).to_not be_success
+        expect(response.code).to eq("401")
+
+        product.reload
+        expect(product.name).to eq("Piston Honda")
+      end
+    end
   end
 
   describe "#create" do
-    it "can create a product" do
-      create_attributes = {
+    before(:each) { sign_in }
+    let(:create_attributes) do
+      {
         name: "Piston Honda",
         model_number: "1991mk2",
         description: "wavetable oscillator",
@@ -147,7 +168,9 @@ describe Api::V1::ProductsController do
         tag_list: ["tag1", "tag2"],
         features: "some features"
       }
+    end
 
+    it "can create a product" do
       post :create, { product: create_attributes }
 
       product = Product.last
@@ -187,18 +210,41 @@ describe Api::V1::ProductsController do
       parsed_response = JSON.parse(response.body, { symbolize_names: true })
       expect(parsed_response[:error]).to eq("Error creating product.")
     end
+
+    context "without a logged in user" do
+      before(:each) { sign_out }
+
+      it "returns a 401" do
+        post :create, { product: create_attributes }
+        expect(response).to_not be_success
+        expect(response.code).to eq("401")
+      end
+    end
   end
 
   describe "#destroy" do
-    it "can destroy a product" do
-      product = Product.create!({
+    before(:each) { sign_in }
+    let(:product) do
+      Product.create!({
         name: "Piston Honda",
         model_number: "1991mk2",
         description: "wavetable oscillator"
       })
+    end
 
+    it "can destroy a product" do
       delete :destroy, { id: product.id }
       expect(Product.find_by_id(product.id)).to be_nil
+    end
+
+    context "without a signed in user" do
+      before(:each) { sign_out }
+
+      it "returns a 401" do
+        delete :destroy, { id: product.id }
+        expect(response).to_not be_success
+        expect(response.code).to eq("401")
+      end
     end
   end
 end

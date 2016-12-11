@@ -1,6 +1,8 @@
-require "product_presenter"
+require "image_presenter"
 
 class Api::V1::ImagesController < ApplicationController
+  before_filter :authorize_user!
+
   PARAMS_WHITELIST = [
     :image
   ].freeze

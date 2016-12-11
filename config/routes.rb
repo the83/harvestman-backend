@@ -5,18 +5,12 @@ Rails.application.routes.draw do
     get :csrf, to: 'csrf#index'
 
     namespace :v1 do
-      resources :images do
-        post :create
-        delete :destroy
-      end
-
-      resources :products
-
-      resources :pages
-
-      resources :posts
-
-      resources :instruments
+      resources :products, only: [:create, :update, :destroy, :show, :index]
+      resources :pages, only: [:create, :update, :destroy, :show, :index]
+      resources :posts, only: [:create, :update, :destroy, :show, :index]
+      resources :instruments, only: [:create, :update, :destroy, :show, :index]
+      resources :images, only: [:create, :destroy]
+      resources :firmwares, only: [:create, :destroy]
 
       resources :tags, only: [] do
         collection do

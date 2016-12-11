@@ -82,15 +82,18 @@ describe Api::V1::PostsController do
   end
 
   describe "#update" do
-    it "can update a post" do
-      post = Post.create!({
+    before(:each) { sign_in }
+    let(:post) do
+      Post.create!({
         permalink: "foo",
         title: "baz",
         content: "bar",
         tag_list: ["tag1", "tag2"]
       })
+    end
 
-      update_attributes = {
+    let(:update_attributes) do
+      {
         id: post.id,
         permalink: "new-permalink",
         title: "new title",
@@ -98,7 +101,9 @@ describe Api::V1::PostsController do
         tag_list: ["newtag1", "newtag2"],
         images: []
       }
+    end
 
+    it "can update a post" do
       put :update, { id: post.id, post: update_attributes }
 
       post.reload
@@ -122,17 +127,33 @@ describe Api::V1::PostsController do
       parsed_response = JSON.parse(response.body, { symbolize_names: true })
       expect(parsed_response).to eq(expected_response)
     end
+
+    context "without a signed in user" do
+      before(:each) { sign_out }
+
+      it "returns a 401" do
+        put :update, { id: post.id, post: update_attributes }
+        expect(response).to_not be_success
+        expect(response.code).to eq("401")
+
+        post.reload
+        expect(post.title).to eq("baz")
+      end
+    end
   end
 
   describe "#create" do
-    it "can create a post" do
-      create_attributes = {
+    before(:each) { sign_in }
+    let(:create_attributes) do
+      {
         permalink: "foo",
         title: "baz",
         content: "bar",
         tag_list: ["tag1", "tag2"]
       }
+    end
 
+    it "can create a post" do
       post :create, { post: create_attributes }
 
       post = Post.last
@@ -170,18 +191,41 @@ describe Api::V1::PostsController do
       parsed_response = JSON.parse(response.body, { symbolize_names: true })
       expect(parsed_response[:error]).to eq("Error creating post.")
     end
+
+    context "without a signed in user" do
+      before(:each) { sign_out }
+
+      it "returns a 401" do
+        post :create, { post: create_attributes }
+        expect(response).to_not be_success
+        expect(response.code).to eq("401")
+      end
+    end
   end
 
   describe "#destroy" do
-    it "can destroy a post" do
-      post = Post.create!({
+    before(:each) { sign_in }
+    let(:post) do
+      Post.create!({
         permalink: "foo",
         content: "bar",
         title: "baz",
       })
+    end
 
+    it "can destroy a post" do
       delete :destroy, { id: post.id }
       expect(Post.find_by_id(post.id)).to be_nil
+    end
+
+    context "without a signed in user" do
+      before(:each) { sign_out }
+
+      it "can returns a 401" do
+        delete :destroy, { id: post.id }
+        expect(response).to_not be_success
+        expect(response.code).to eq("401")
+      end
     end
   end
 end

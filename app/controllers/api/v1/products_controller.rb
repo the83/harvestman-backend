@@ -1,6 +1,9 @@
 require "product_presenter"
 
 class Api::V1::ProductsController < ApplicationController
+  before_filter :authorize_user!, only: [:update, :create, :destroy]
+  respond_to :json
+
   UPDATE_PARAMS_WHITELIST = [
     :name,
     :description,
@@ -10,6 +13,7 @@ class Api::V1::ProductsController < ApplicationController
     :features,
     tag_list: [],
     images_attributes: [:id, :image],
+    firmwares: [],
   ].freeze
 
   def show
@@ -56,6 +60,14 @@ class Api::V1::ProductsController < ApplicationController
     return if images_attributes.blank?
     images_attributes["images_attributes"].each do |p|
       model.images << Image.find_by_id(p["id"])
+    end
+  end
+
+  def build_firmwares_for(model)
+    firmwares_attributes = create_params.slice(:firmwares_attributes)
+    return if firmwares_attributes.blank?
+    firmwares_attributes["firmwares_attributes"].each do |p|
+      model.firmwares << Firmware.find_by_id(p["id"])
     end
   end
 

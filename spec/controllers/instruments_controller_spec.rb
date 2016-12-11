@@ -70,14 +70,16 @@ describe Api::V1::InstrumentsController do
   end
 
   describe "#update" do
-    it "can update a instrument" do
-      instrument = Instrument.create!({
+    let(:instrument) do
+      Instrument.create!({
         permalink: "foo",
         name: "baz",
         description: "bar",
         brief_description: "buz"
       })
+    end
 
+    let(:update_attributes) do
       update_attributes = {
         id: instrument.id,
         permalink: "new-permalink",
@@ -85,84 +87,134 @@ describe Api::V1::InstrumentsController do
         description: "new description",
         brief_description: "new brief description"
       }
+    end
 
-      put :update, { id: instrument.id, instrument: update_attributes }
+    context "with a signed in user" do
+      before(:each) { sign_in }
 
-      instrument.reload
-      expect(instrument.permalink).to eq(update_attributes[:permalink])
-      expect(instrument.name).to eq(update_attributes[:name])
-      expect(instrument.description).to eq(update_attributes[:description])
-      expect(instrument.brief_description).to eq(update_attributes[:brief_description])
+      it "can update a instrument" do
+        put :update, { id: instrument.id, instrument: update_attributes }
 
-      expected_response = {
-        instrument: {
-          id: instrument.id,
-          permalink: update_attributes[:permalink],
-          name: update_attributes[:name],
-          description: update_attributes[:description],
-          brief_description: update_attributes[:brief_description]
-        },
-      }
-      parsed_response = JSON.parse(response.body, { symbolize_names: true })
-      expect(parsed_response).to eq(expected_response)
+        instrument.reload
+        expect(instrument.permalink).to eq(update_attributes[:permalink])
+        expect(instrument.name).to eq(update_attributes[:name])
+        expect(instrument.description).to eq(update_attributes[:description])
+        expect(instrument.brief_description).to eq(update_attributes[:brief_description])
+
+        expected_response = {
+          instrument: {
+            id: instrument.id,
+            permalink: update_attributes[:permalink],
+            name: update_attributes[:name],
+            description: update_attributes[:description],
+            brief_description: update_attributes[:brief_description]
+          },
+        }
+        parsed_response = JSON.parse(response.body, { symbolize_names: true })
+        expect(parsed_response).to eq(expected_response)
+      end
+    end
+
+    context "without a signed in user" do
+      before(:each) { sign_out }
+
+      it "returns a 401" do
+        put :update, { id: instrument.id, instrument: update_attributes }
+        expect(response.code).to eq("401")
+
+        instrument.reload
+        expect(instrument.name).to eq("baz")
+      end
     end
   end
 
   describe "#create" do
-    it "can create a instrument" do
-      create_attributes = {
+    let(:create_attributes) do
+      {
         permalink: "foo",
         name: "baz",
         description: "bar",
         brief_description: "buz"
       }
-
-      post :create, { instrument: create_attributes }
-
-      instrument = Instrument.last
-      expect(instrument.permalink).to eq(create_attributes[:permalink])
-      expect(instrument.name).to eq(create_attributes[:name])
-      expect(instrument.description).to eq(create_attributes[:description])
-      expect(instrument.brief_description).to eq(create_attributes[:brief_description])
-
-      expected_response = {
-        instrument: {
-          id: instrument.id,
-          permalink: instrument.permalink,
-          name: instrument.name,
-          description: instrument.description,
-          brief_description: instrument.brief_description,
-        }
-      }
-
-      parsed_response = JSON.parse(response.body, { symbolize_names: true })
-      expect(parsed_response).to eq(expected_response)
     end
 
-    it "returns an error if the name is not provided" do
-      create_attributes = {
-        permalink: "foo",
-        description: "bar"
-      }
+    context "with a signed in user" do
+      before(:each) { sign_in }
 
-      post :create, { instrument: create_attributes }
+      it "can create a instrument" do
+        post :create, { instrument: create_attributes }
 
-      expect(response).to_not be_success
-      parsed_response = JSON.parse(response.body, { symbolize_names: true })
-      expect(parsed_response[:error]).to eq("Error creating instrument.")
+        instrument = Instrument.last
+        expect(instrument.permalink).to eq(create_attributes[:permalink])
+        expect(instrument.name).to eq(create_attributes[:name])
+        expect(instrument.description).to eq(create_attributes[:description])
+        expect(instrument.brief_description).to eq(create_attributes[:brief_description])
+
+        expected_response = {
+          instrument: {
+            id: instrument.id,
+            permalink: instrument.permalink,
+            name: instrument.name,
+            description: instrument.description,
+            brief_description: instrument.brief_description,
+          }
+        }
+
+        parsed_response = JSON.parse(response.body, { symbolize_names: true })
+        expect(parsed_response).to eq(expected_response)
+      end
+
+      it "returns an error if the name is not provided" do
+        create_attributes = {
+          permalink: "foo",
+          description: "bar"
+        }
+
+        post :create, { instrument: create_attributes }
+
+        expect(response).to_not be_success
+        parsed_response = JSON.parse(response.body, { symbolize_names: true })
+        expect(parsed_response[:error]).to eq("Error creating instrument.")
+      end
+    end
+
+    context "without a signed in user" do
+      before(:each) { sign_out }
+
+      it "returns a 401" do
+        post :create, { instrument: create_attributes }
+        expect(response).to_not be_success
+        expect(response.code).to eq("401")
+      end
     end
   end
 
   describe "#destroy" do
-    it "can destroy a instrument" do
-      instrument = Instrument.create!({
+    let(:instrument) do
+      Instrument.create!({
         permalink: "foo",
         description: "bar",
         name: "baz"
       })
+    end
 
-      delete :destroy, { id: instrument.id }
-      expect(Instrument.find_by_id(instrument.id)).to be_nil
+    context "with a signed in user" do
+      before(:each) { sign_in }
+
+      it "can destroy a instrument" do
+        delete :destroy, { id: instrument.id }
+        expect(Instrument.find_by_id(instrument.id)).to be_nil
+      end
+    end
+
+    context "without a signed in user" do
+      before(:each) { sign_out }
+
+      it "returns a 401" do
+        delete :destroy, { id: instrument.id }
+        expect(response).to_not be_success
+        expect(response.code).to eq("401")
+      end
     end
   end
 end
