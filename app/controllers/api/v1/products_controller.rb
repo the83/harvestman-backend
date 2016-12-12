@@ -12,7 +12,7 @@ class Api::V1::ProductsController < ApplicationController
   end
 
   def index
-    products = Product.all
+    products = Product.all.order("created_at DESC")
     presented_products = products.map { |p| ProductPresenter.new(p) }
     render({ json: { products: presented_products } })
   end

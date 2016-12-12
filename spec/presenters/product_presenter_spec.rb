@@ -23,7 +23,8 @@ describe ProductPresenter do
       brief_description: product.brief_description,
       tag_list: product.tag_list,
       images: [],
-      features: product.features
+      features: product.features,
+      firmwares: [],
     }).to_json
 
     expect(ProductPresenter.new(product).to_json).to eq(presented)

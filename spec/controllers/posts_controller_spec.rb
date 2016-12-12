@@ -53,6 +53,17 @@ describe Api::V1::PostsController do
       expected_response = {
         posts: [
           {
+            id: second.id,
+            permalink: second.permalink,
+            title: second.title,
+            content: second.content,
+            tag_list: second.tag_list,
+            images: [],
+            date: second.created_at.in_time_zone(
+              PostPresenter::TIME_ZONE
+            ).strftime(PostPresenter::TIME_FORMAT)
+          },
+          {
             id: first.id,
             permalink: first.permalink,
             title: first.title,
@@ -63,17 +74,6 @@ describe Api::V1::PostsController do
               PostPresenter::TIME_ZONE
             ).strftime(PostPresenter::TIME_FORMAT)
           },
-          {
-            id: second.id,
-            permalink: second.permalink,
-            title: second.title,
-            content: second.content,
-            tag_list: second.tag_list,
-            images: [],
-            date: second.created_at.in_time_zone(
-              PostPresenter::TIME_ZONE
-            ).strftime(PostPresenter::TIME_FORMAT)
-          }
         ]
       }
       parsed_response = JSON.parse(response.body, { symbolize_names: true })

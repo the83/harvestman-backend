@@ -11,7 +11,8 @@ class Api::V1::PostsController < ApplicationController
   ].freeze
 
   def index
-    posts = Post.all.map { |p| PostPresenter.new(p) }
+    posts = Post.all.order("created_at DESC")
+      .map { |p| PostPresenter.new(p) }
     render({ json: { posts: posts } })
   end
 

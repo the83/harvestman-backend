@@ -11,7 +11,8 @@ describe Api::V1::ProductsController do
         brief_description: "brief",
         manual: "buz",
         tag_list: ["tag1", "tag2"],
-        features: "some features"
+        features: "some features",
+        firmwares: [],
       })
 
       get :show, { id: product.id }
@@ -26,7 +27,8 @@ describe Api::V1::ProductsController do
           manual: product.manual,
           tag_list: product.tag_list,
           images: [],
-          features: "some features"
+          features: "some features",
+          firmwares: [],
         }
       }
 
@@ -44,7 +46,7 @@ describe Api::V1::ProductsController do
         brief_description: "brief",
         manual: "piston honda manual",
         tag_list: ["tag1", "tag2"],
-        features: "some features"
+        features: "some features",
       })
 
       second = Product.create!({
@@ -54,24 +56,13 @@ describe Api::V1::ProductsController do
         brief_description: "brief",
         manual: "Hertz Manual",
         tag_list: ["tag1", "tag2"],
-        features: "some other features"
+        features: "some other features",
       })
 
       get :index
 
       expected_response = {
         products: [
-          {
-            id: first.id,
-            name: first.name,
-            model_number: first.model_number,
-            description: first.description,
-            brief_description: first.brief_description,
-            manual: first.manual,
-            tag_list: first.tag_list,
-            images: [],
-            features: first.features
-          },
           {
             id: second.id,
             name: second.name,
@@ -81,8 +72,21 @@ describe Api::V1::ProductsController do
             manual: second.manual,
             tag_list: second.tag_list,
             images: [],
-            features: second.features
-          }
+            features: second.features,
+            firmwares: [],
+          },
+          {
+            id: first.id,
+            name: first.name,
+            model_number: first.model_number,
+            description: first.description,
+            brief_description: first.brief_description,
+            manual: first.manual,
+            tag_list: first.tag_list,
+            images: [],
+            features: first.features,
+            firmwares: [],
+          },
         ]
       }
       parsed_response = JSON.parse(response.body, { symbolize_names: true })
@@ -131,7 +135,8 @@ describe Api::V1::ProductsController do
           manual: update_attributes[:manual],
           tag_list: update_attributes[:tag_list],
           images: [],
-          features: update_attributes[:features]
+          features: update_attributes[:features],
+          firmwares: [],
         },
       }
       parsed_response = JSON.parse(response.body, { symbolize_names: true })
@@ -190,7 +195,8 @@ describe Api::V1::ProductsController do
           manual: product.manual,
           tag_list: product.tag_list,
           images: [],
-          features: "some features"
+          features: "some features",
+          firmwares: [],
         },
       }
 
