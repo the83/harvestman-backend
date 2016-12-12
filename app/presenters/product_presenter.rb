@@ -8,8 +8,9 @@ class ProductPresenter < BasePresenter
       manual: @object.manual,
       brief_description: @object.brief_description,
       tag_list: @object.tag_list,
-      images: @object.images,
-      features: @object.features
+      images: present_images(@object.images),
+      features: @object.features,
+      firmwares: present_firmwares(@object.firmwares)
     }
   end
 
@@ -17,5 +18,9 @@ class ProductPresenter < BasePresenter
 
   def present_images(images)
     images.order(created_at: :asc).map {|i| ImagePresenter.new(i) }
+  end
+
+  def present_firmwares(firmwares)
+    firmwares.order(created_at: :asc).map {|i| FirmwarePresenter.new(i) }
   end
 end

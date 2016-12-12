@@ -4,18 +4,6 @@ class Api::V1::ProductsController < ApplicationController
   before_filter :authorize_user!, only: [:update, :create, :destroy]
   respond_to :json
 
-  UPDATE_PARAMS_WHITELIST = [
-    :name,
-    :description,
-    :brief_description,
-    :model_number,
-    :manual,
-    :features,
-    tag_list: [],
-    images_attributes: [:id, :image],
-    firmwares: [],
-  ].freeze
-
   def show
     product = Product.find_by_id(params[:id])
     return head 404 unless product
@@ -36,10 +24,11 @@ class Api::V1::ProductsController < ApplicationController
   end
 
   def create
-    product = Product.new(create_params.except(:images_attributes))
+    product = Product.new(update_params.except(:images_attributes, :firmwares_attributes))
 
     if product.save
       build_images_for(product)
+      build_firmwares_for(product)
       render({ json: { product: ProductPresenter.new(product) } })
     else
       render({ status: 400, json: {
@@ -56,7 +45,7 @@ class Api::V1::ProductsController < ApplicationController
   private
 
   def build_images_for(model)
-    images_attributes = create_params.slice(:images_attributes)
+    images_attributes = update_params.slice(:images_attributes)
     return if images_attributes.blank?
     images_attributes["images_attributes"].each do |p|
       model.images << Image.find_by_id(p["id"])
@@ -64,18 +53,26 @@ class Api::V1::ProductsController < ApplicationController
   end
 
   def build_firmwares_for(model)
-    firmwares_attributes = create_params.slice(:firmwares_attributes)
+    firmwares_attributes = update_params.slice(:firmwares_attributes)
     return if firmwares_attributes.blank?
     firmwares_attributes["firmwares_attributes"].each do |p|
-      model.firmwares << Firmware.find_by_id(p["id"])
+      firmware = Firmware.find_by_id(p["id"])
+      firmware.name = p["name"]
+      model.firmwares << firmware
     end
   end
 
   def update_params
-    params.required(:product).permit(*UPDATE_PARAMS_WHITELIST)
-  end
-
-  def create_params
-    params.required(:product).permit(*UPDATE_PARAMS_WHITELIST)
+    params.required(:product).permit(
+      :name,
+      :description,
+      :brief_description,
+      :model_number,
+      :manual,
+      :features,
+      tag_list: [],
+      images_attributes: [],
+      :firmwares_attributes => [:id, :name],
+    )
   end
 end

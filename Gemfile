@@ -14,8 +14,8 @@ gem 'devise', '3.5.2'
 # gem 'unf'
 
 # file uploads
-gem "carrierwave", "0.10.0"
-gem "fog"
+gem 'fog-aws'
+gem 'carrierwave', github: 'carrierwaveuploader/carrierwave'
 gem "unf"
 
 # tags

@@ -1,11 +1,11 @@
 # encoding: utf-8
 require 'fog/aws'
 
-class ImageUploader < CarrierWave::Uploader::Base
+class FirmwareUploader < CarrierWave::Uploader::Base
   storage :fog
 
   def extension_white_list
-    %w(jpg jpeg gif png)
+    %w(zip)
   end
 
   def store_dir

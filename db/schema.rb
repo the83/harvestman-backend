@@ -11,10 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160313232413) do
+ActiveRecord::Schema.define(version: 20161211232511) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "firmwares", force: :cascade do |t|
+    t.integer  "product_id"
+    t.string   "name"
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.string   "firmware"
+  end
 
   create_table "images", force: :cascade do |t|
     t.string   "image"
@@ -33,6 +42,13 @@ ActiveRecord::Schema.define(version: 20160313232413) do
     t.string   "brief_description"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
+  end
+
+  create_table "manuals", force: :cascade do |t|
+    t.integer  "product_id"
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "pages", force: :cascade do |t|
@@ -61,6 +77,7 @@ ActiveRecord::Schema.define(version: 20160313232413) do
     t.string   "brief_description"
     t.integer  "instrument_id"
     t.text     "features"
+    t.json     "firmwares"
   end
 
   add_index "products", ["instrument_id"], name: "index_products_on_instrument_id", using: :btree
