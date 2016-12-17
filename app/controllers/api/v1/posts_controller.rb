@@ -11,13 +11,13 @@ class Api::V1::PostsController < ApplicationController
   ].freeze
 
   def index
-    posts = Post.all.order("created_at DESC")
+    posts = Post.includes(:images).order("created_at DESC")
       .map { |p| PostPresenter.new(p) }
     render({ json: { posts: posts } })
   end
 
   def show
-    post = Post.find_by_permalink(params[:id]) ||
+    post = Post.includes(:images).find_by_permalink(params[:id]) ||
       Post.find_by_id(params[:id])
 
     return head 404 unless post

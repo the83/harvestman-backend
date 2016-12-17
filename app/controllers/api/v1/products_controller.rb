@@ -5,14 +5,14 @@ class Api::V1::ProductsController < ApplicationController
   respond_to :json
 
   def show
-    product = Product.find_by_id(params[:id])
+    product = Product.includes(:images, :firmwares, :manuals).find_by_id(params[:id])
     return head 404 unless product
 
     render({ json: { product: ProductPresenter.new(product) } })
   end
 
   def index
-    products = Product.all.order("created_at DESC")
+    products = Product.includes(:images, :firmwares, :manuals).order("created_at DESC")
     presented_products = products.map { |p| ProductPresenter.new(p) }
     render({ json: { products: presented_products } })
   end
