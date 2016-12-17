@@ -12,7 +12,6 @@ describe Api::V1::ProductsController do
         manual: "buz",
         tag_list: ["tag1", "tag2"],
         features: "some features",
-        firmwares: [],
       })
 
       get :show, { id: product.id }
@@ -29,6 +28,7 @@ describe Api::V1::ProductsController do
           images: [],
           features: "some features",
           firmwares: [],
+          manuals: [],
         }
       }
 
@@ -74,6 +74,7 @@ describe Api::V1::ProductsController do
             images: [],
             features: second.features,
             firmwares: [],
+            manuals: [],
           },
           {
             id: first.id,
@@ -86,6 +87,7 @@ describe Api::V1::ProductsController do
             images: [],
             features: first.features,
             firmwares: [],
+            manuals: [],
           },
         ]
       }
@@ -137,6 +139,7 @@ describe Api::V1::ProductsController do
           images: [],
           features: update_attributes[:features],
           firmwares: [],
+          manuals: [],
         },
       }
       parsed_response = JSON.parse(response.body, { symbolize_names: true })
@@ -197,6 +200,7 @@ describe Api::V1::ProductsController do
           images: [],
           features: "some features",
           firmwares: [],
+          manuals: [],
         },
       }
 

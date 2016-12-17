@@ -1,5 +1,3 @@
-require "pp"
-
 class Api::V1::FirmwaresController < ApplicationController
   before_filter :authorize_user!
 

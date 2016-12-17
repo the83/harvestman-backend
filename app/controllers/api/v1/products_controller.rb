@@ -24,11 +24,18 @@ class Api::V1::ProductsController < ApplicationController
   end
 
   def create
-    product = Product.new(update_params.except(:images_attributes, :firmwares_attributes))
+    product = Product.new(
+      update_params.except(
+        :images_attributes,
+        :firmwares_attributes,
+        :manuals_attributes
+      )
+    )
 
     if product.save
       build_images_for(product)
       build_firmwares_for(product)
+      build_manuals_for(product)
       render({ json: { product: ProductPresenter.new(product) } })
     else
       render({ status: 400, json: {
@@ -62,6 +69,16 @@ class Api::V1::ProductsController < ApplicationController
     end
   end
 
+  def build_manuals_for(model)
+    manuals_attributes = update_params.slice(:manuals_attributes)
+    return if manuals_attributes.blank?
+    manuals_attributes["manuals_attributes"].each do |p|
+      manual = Firmware.find_by_id(p["id"])
+      manual.name = p["name"]
+      model.manuals << manual
+    end
+  end
+
   def update_params
     params.required(:product).permit(
       :name,
@@ -73,6 +90,7 @@ class Api::V1::ProductsController < ApplicationController
       tag_list: [],
       images_attributes: [],
       :firmwares_attributes => [:id, :name],
+      :manuals_attributes => [:id, :name],
     )
   end
 end

@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       resources :instruments, only: [:create, :update, :destroy, :show, :index]
       resources :images, only: [:create, :destroy]
       resources :firmwares, only: [:create, :destroy]
+      resources :manuals, only: [:create, :destroy]
 
       resources :tags, only: [] do
         collection do
