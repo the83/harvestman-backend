@@ -12,7 +12,14 @@ class Api::V1::ProductsController < ApplicationController
   end
 
   def index
-    products = Product.includes(:images, :firmwares, :manuals).order("created_at DESC")
+    if params[:featured]
+      products = Product
+        .includes(:images, :firmwares, :manuals)
+        .limit(5).order("RANDOM()")
+    else
+      products = Product.includes(:images, :firmwares, :manuals).order("created_at DESC")
+    end
+
     presented_products = products.map { |p| ProductPresenter.new(p) }
     render({ json: { products: presented_products } })
   end
