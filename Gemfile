@@ -9,7 +9,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'jbuilder', '~> 2.0'
 gem 'rack-cors', require: 'rack/cors'
 gem 'devise', '4.7.2'
-gem 'json', '1.8.5'
+gem 'json', '2.5.1'
 gem 'sprockets', '~>3.0'
 
 # file uploads
