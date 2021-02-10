@@ -1,7 +1,7 @@
 require "product_presenter"
 
 class Api::V1::ProductsController < ApplicationController
-  before_filter :authorize_user!, only: [:update, :create, :destroy]
+  before_action :authorize_user!, only: [:update, :create, :destroy]
   respond_to :json
 
   def show

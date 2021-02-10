@@ -1,4 +1,4 @@
-class CreateManuals < ActiveRecord::Migration
+class CreateManuals < ActiveRecord::Migration[4.2]
   def change
     create_table :manuals do |t|
       t.integer :product_id

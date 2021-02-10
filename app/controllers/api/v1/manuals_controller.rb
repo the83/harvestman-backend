@@ -1,5 +1,5 @@
 class Api::V1::ManualsController < ApplicationController
-  before_filter :authorize_user!
+  before_action :authorize_user!
 
   PARAMS_WHITELIST = [
     :manual

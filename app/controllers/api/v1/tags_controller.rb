@@ -1,10 +1,10 @@
 class Api::V1::TagsController < ApplicationController
-  before_filter :authorize_user!, only: [:update, :create, :destroy]
+  before_action :authorize_user!, only: [:update, :create, :destroy]
   respond_to :json
 
-  before_filter :find_class_and_obj
+  before_action :find_class_and_obj
 
-  before_filter :sanitize_tags!, only: [:update, :destroy]
+  before_action :sanitize_tags!, only: [:update, :destroy]
 
   # /tags/products/
   def index

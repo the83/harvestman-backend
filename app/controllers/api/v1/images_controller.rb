@@ -1,7 +1,7 @@
 require "image_presenter"
 
 class Api::V1::ImagesController < ApplicationController
-  before_filter :authorize_user!
+  before_action :authorize_user!
 
   PARAMS_WHITELIST = [
     :image

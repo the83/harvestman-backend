@@ -1,17 +1,16 @@
 source 'https://rubygems.org'
+ruby "2.6.6"
 
-gem 'rails', '4.2.4'
-gem 'pg', '0.15.1'
+gem 'rails', '6.0.0'
+gem 'activerecord', '6.0.0'
+gem 'actionpack', '6.0.0'
+gem 'pg', '>= 0.18.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'jbuilder', '~> 2.0'
 gem 'rack-cors', require: 'rack/cors'
-gem 'activesupport-json_encoder'
-gem 'devise', '3.5.2'
-
-# # file uploads
-# gem 'carrierwave', github: 'carrierwaveuploader/carrierwave'
-# gem 'fog', require: 'fog/aws'
-# gem 'unf'
+gem 'devise', '4.7.2'
+gem 'json', '1.8.5'
+gem 'sprockets', '~>3.0'
 
 # file uploads
 gem 'fog-aws'
@@ -20,9 +19,6 @@ gem "unf"
 
 # tags
 gem 'acts-as-taggable-on'
-
-#search
-gem 'textacular'
 
 group :development do
   gem 'spring'

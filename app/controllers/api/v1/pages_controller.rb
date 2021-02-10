@@ -1,5 +1,5 @@
 class Api::V1::PagesController < ApplicationController
-  before_filter :authorize_user!, only: [:update, :create, :destroy]
+  before_action :authorize_user!, only: [:update, :create, :destroy]
   respond_to :json
 
   PARAMS_WHITELIST = [:permalink, :content, :title].freeze
