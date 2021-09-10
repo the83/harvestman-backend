@@ -18,14 +18,14 @@ class ProductPresenter < BasePresenter
   private
 
   def present_images(images)
-    images.order(created_at: :asc).map {|i| ImagePresenter.new(i) }
+    images.map {|i| ImagePresenter.new(i) }
   end
 
   def present_firmwares(firmwares)
-    firmwares.order(created_at: :asc).map {|i| FirmwarePresenter.new(i) }
+    firmwares.map {|i| FirmwarePresenter.new(i) }
   end
 
   def present_manuals(manuals)
-    manuals.order(created_at: :asc).map {|i| ManualPresenter.new(i) }
+    manuals.map {|i| ManualPresenter.new(i) }
   end
 end
