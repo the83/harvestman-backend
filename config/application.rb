@@ -15,6 +15,7 @@ module HarvestmanBackend
       end
     end
 
+    config.middleware.use ActionDispatch::Flash
     config.autoload_paths += Dir["#{config.root}/app/presenters/**/"]
     config.autoload_paths += Dir["#{config.root}/lib/**/"]
   end
