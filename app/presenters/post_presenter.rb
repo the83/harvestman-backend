@@ -19,6 +19,6 @@ class PostPresenter < BasePresenter
   private
 
   def present_images(images)
-    images.order(created_at: :asc).map {|i| ImagePresenter.new(i) }
+    images.map {|i| ImagePresenter.new(i) }
   end
 end

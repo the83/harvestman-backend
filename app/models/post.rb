@@ -5,7 +5,7 @@ class Post < ActiveRecord::Base
 
   acts_as_ordered_taggable
 
-  has_many :images, :as => :imageable
+  has_many :images, -> { order(created_at: :asc) }, :as => :imageable
   accepts_nested_attributes_for :images, :allow_destroy => :true
 
   include PermalinkSanitizer
