@@ -8,7 +8,7 @@ class PostPresenter < BasePresenter
       permalink: @object.permalink,
       title: @object.title,
       content: @object.content,
-      tag_list: @object.tag_list,
+      tag_list: @object.tags.map(&:name),
       images: present_images(@object.images),
       date: @object.created_at
         .in_time_zone(TIME_ZONE)

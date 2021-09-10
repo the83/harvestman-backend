@@ -7,7 +7,7 @@ class ProductPresenter < BasePresenter
       description: @object.description,
       manual: @object.manual,
       brief_description: @object.brief_description,
-      tag_list: @object.tag_list,
+      tag_list: @object.tags.map(&:name),
       images: present_images(@object.images),
       features: @object.features,
       firmwares: present_firmwares(@object.firmwares),
