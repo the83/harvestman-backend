@@ -4,8 +4,18 @@ class Api::V1::ProductsController < ApplicationController
   before_action :authorize_user!, only: [:update, :create, :destroy]
   respond_to :json
 
+  PRODUCT_INCLUDES = [
+    :images,
+    :firmwares,
+    :manuals,
+    :tags,
+    :taggings,
+  ].freeze
+
   def show
-    product = Product.includes(:images, :firmwares, :manuals).find_by_id(params[:id])
+    product = Product.includes(
+      PRODUCT_INCLUDES
+    ).find_by_id(params[:id])
     return head 404 unless product
 
     render({ json: { product: ProductPresenter.new(product) } })
@@ -14,10 +24,12 @@ class Api::V1::ProductsController < ApplicationController
   def index
     if params[:featured]
       products = Product
-        .includes(:images, :firmwares, :manuals, :tags)
+        .includes(PRODUCT_INCLUDES)
         .limit(5).order("RANDOM()")
     else
-      products = Product.includes(:images, :firmwares, :manuals, :tags).order("created_at DESC")
+      products = Product
+        .includes(PRODUCT_INCLUDES)
+        .order("created_at DESC")
     end
 
     presented_products = products.map { |p| ProductPresenter.new(p) }
