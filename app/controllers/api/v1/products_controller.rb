@@ -14,10 +14,10 @@ class Api::V1::ProductsController < ApplicationController
   def index
     if params[:featured]
       products = Product
-        .includes(:images, :firmwares, :manuals)
+        .includes(:images, :firmwares, :manuals, :tags)
         .limit(5).order("RANDOM()")
     else
-      products = Product.includes(:images, :firmwares, :manuals).order("created_at DESC")
+      products = Product.includes(:images, :firmwares, :manuals, :tags).order("created_at DESC")
     end
 
     presented_products = products.map { |p| ProductPresenter.new(p) }
